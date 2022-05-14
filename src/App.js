@@ -6,6 +6,8 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Header from "./pages/Header";
 import Home from "./pages/Home";
+import List from "./pages/List";
+import NewProduct from "./pages/NewProduct";
 
 function App() {
   return (
@@ -15,7 +17,10 @@ function App() {
         <Routes>
           <Route path={"/login"} element={<SignIn />} />
           <Route path={"/cadastro"} element={<SignUp />} />
-          <Route path={"/"} element={<Home />} />
+          <Route path={"/"} element={<Home />}>
+            <Route path={"/listar"} element={<List />} />
+            <Route path={"/adicionar"} element={<NewProduct />}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

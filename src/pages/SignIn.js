@@ -50,9 +50,9 @@ export default function SignIn(params) {
     try {
       const {
         data: { token },
-      } = await api.signIn(formData.name, formData.password);
+      } = await api.signIn(formData);
       signIn(token);
-      navigate("/");
+      navigate("/listar");
     } catch (error) {
       if (error.response) {
         Toast("error", error.response.data);

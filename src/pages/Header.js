@@ -15,7 +15,7 @@ export default function Header() {
         fontSize={"100px"}
         display={"flex"}
         alignItems={"center"}
-        marginLeft={"13%"}
+        marginLeft={"11%"}
         fontFamily={"monospace"}
       >
         StockLow

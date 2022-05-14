@@ -55,11 +55,15 @@ export default function SignUp(params) {
       return;
     }
 
-    try {
-      await api.signUp(formData.name, formData.password);
-      Toast("success", "Cadastro efetuado com sucesso!").then(setTimeout(5000));
+    delete formData.passwordConfirmation;
 
+    function toLogin() {
       navigate("/login");
+    }
+    try {
+      await api.signUp(formData);
+      Toast("success", "Cadastro efetuado com sucesso!");
+      setTimeout(toLogin, 3000);
     } catch (error) {
       if (error.response) {
         Toast("error", error.response.data);
