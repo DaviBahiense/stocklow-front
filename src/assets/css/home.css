@@ -5,12 +5,16 @@
   margin: 0 auto;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
   width: 100%;
-  color: #444;
-  background: #222;
+  color: black;
+  background: none;
   text-align: center;
   border-radius: 6px;
+  font-weight: 400;
+  font-size: large;
+  font-style: oblique;
+  font-size: 18px;
 }
 
 ul.tabs {
@@ -105,7 +109,7 @@ ul.tabs li a.activeTab {
   border-right: 2px solid #72655F;
   border-left: 2px solid #72655F;
   border-top: 2px solid #72655F;
-
+  
 }
 
 p {
@@ -113,7 +117,7 @@ p {
   padding: 30px 40px;
   color: #72655F;
   line-height: 26px;
-  font-size: 18px;
+  font-size: 40px;
   margin: 0;
 }
 

@@ -67,10 +67,10 @@ export default function Home(params) {
     <div class="wrapper">
       <ul class="tabs group">
         <li onClick={firstTab}>
-          <a class="tabOne switch activeTab">First Tab</a>
+          <a class="tabOne switch activeTab">Criar Pedido</a>
         </li>
         <li onClick={secondTab}>
-          <a class="tabTwo switch">Second Tab</a>
+          <a class="tabTwo switch">Adicionar Produto</a>
         </li>
       </ul>
       <Outlet />
