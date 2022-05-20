@@ -11,9 +11,9 @@ import SendIcon from "@mui/icons-material/Send";
 import AddIcon from "@mui/icons-material/Add";
 import Form from "../components/Form";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import api from "../services/api";
-import { width } from "@mui/system";
+import useAuth from "../hooks/useAuth";
 
 const styles = {
   boxInput: {
@@ -52,33 +52,51 @@ const styles = {
     backgroundColor: "#a6a0ce",
   },
 };
-const list = [
-  { category: "verdura" },
-  { category: "fruta" },
-  { category: "outros" },
-  { category: "joj" },
-];
 
 export default function NewOrder() {
+  const { token } = useAuth();
+  const [products, setProducts] = useState({
+    category: "",
+    product: [{ product: "", unity: "", quantity: "" }],
+  });
   const [formData, setFormData] = useState({
     category: "",
     product: "",
     quantity: "",
     unity: "",
   });
-  const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
   const [newInput, setNewInput] = useState([{ input: "" }]);
+
+  useEffect(() => {
+    async function loadPage() {
+      const data = await api.getProducts(token);
+
+      setProducts(data.data);
+    }
+    loadPage();
+  }, []);
+
+  if (products.category === "") {
+    return <h1>Carregando...</h1>;
+  }
 
   function handleSubmit() {}
   let listar = {};
 
-  function handleAutoInput(name, value, listCategory) {
-    setFormData([
+  function handleAutoInput(value, listProduct) {
+    const { unity } = listProduct.product.find((e) => e.product === value);
+
+    setFormData({
       ...formData,
-      { product: value, category: listCategory, unity: 1 },
-    ]);
+      ["product"]: value,
+      ["category"]: listProduct.category,
+      ["unity"]: unity,
+    });
+  }
+  console.log(formData);
+  function handleInput(event) {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   }
 
   function addInput() {
@@ -88,10 +106,10 @@ export default function NewOrder() {
   return (
     <div class="content">
       <Form onSubmit={handleSubmit}>
-        {list.map((listCategory, index) => (
+        {products.map((listProduct, index) => (
           <>
             <Box sx={styles.boxCategory} key={index}>
-              <Typography sx={styles.typo}>{listCategory.category}</Typography>
+              <Typography sx={styles.typo}>{listProduct.category}</Typography>
               <Button
                 variant="contained"
                 sx={styles.button}
@@ -105,24 +123,23 @@ export default function NewOrder() {
                   className="product"
                   sx={styles.input}
                   autoComplete={true}
-                  options={list.map((e) => e.category)}
+                  options={listProduct.product.map((e) => e.product)}
                   isOptionEqualToValue={(option, value) => option === value}
                   renderInput={(e) => (
                     <TextField {...e} label="Produto" size="medium" />
                   )}
                   onInputChange={(e, value) =>
-                    handleAutoInput("product", value, listCategory.category)
+                    handleAutoInput(value, listProduct)
                   }
                 />
-                <Autocomplete
-                  className="untiy"
+                <TextField
+                  name="quantity"
                   sx={(styles.input, { width: "80px" })}
-                  autoComplete={true}
-                  options={list.map((e) => e.category)}
-                  renderInput={(e) => (
-                    <TextField {...e} label="unid" size="medium" />
-                  )}
-                  onInputChange={(e, value) => handleAutoInput("untiy", value)}
+                  label={listProduct.product[0].unity} //
+                  type="number"
+                  variant="outlined"
+                  onChange={handleInput}
+                  value={formData.quantity}
                 />
               </Box>
             ))}
@@ -135,7 +152,6 @@ export default function NewOrder() {
             type="submit"
             sx={{ width: "697px", height: "46px", backgroundColor: "#a6a0ce" }}
             endIcon={<SendIcon />}
-            onClick={() => navigate("/pedido")}
           >
             {loading ? "Carregando" : "Enviar"}
           </Button>

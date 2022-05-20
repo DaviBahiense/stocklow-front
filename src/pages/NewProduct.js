@@ -2,7 +2,6 @@ import "../assets/css/home.css";
 import {
   Box,
   Button,
-  Divider,
   TextField,
   Autocomplete,
   Typography,
@@ -12,7 +11,6 @@ import Toast from "../components/Toast";
 import { ToastContainer } from "react-toastify";
 import Form from "../components/Form";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import useAuth from "../hooks/useAuth";
 
@@ -39,11 +37,6 @@ const styles = {
     fontFamily: "'PT Sans', sans-serif",
   },
 };
-const list = [
-  { category: "verdura" },
-  { category: "fruta" },
-  { category: "outros" },
-];
 
 export default function List() {
   const { token } = useAuth();
@@ -73,7 +66,10 @@ export default function List() {
     }
 
     try {
+      setLoading(true);
       await api.createProduct(formData, token);
+      setLoading(false);
+
       Toast("success", "Produto inserido no banco de dados");
     } catch (error) {
       Toast("error", "Ocorreu algum erro no servidor...");

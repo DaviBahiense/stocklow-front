@@ -17,7 +17,7 @@ export default function Home(params) {
       return;
     }
     handleLoadPage();
-  }, []);
+  }, [token]);
 
   async function handleLoadPage() {
     try {
