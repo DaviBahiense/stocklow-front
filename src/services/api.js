@@ -20,15 +20,26 @@ async function signIn(signInData) {
   return baseAPI.post("/sign-in", signInData);
 }
 
-async function getData(token) {
+async function getProducts(token) {
   const config = getConfig(token);
-  return baseAPI.get("/", config);
+  return baseAPI.get("/products", config);
+}
+
+async function getCategories() {
+  return baseAPI.get("/categories");
+}
+
+async function createProduct(data, token) {
+  const config = getConfig(token);
+  return baseAPI.post("/products", data, config);
 }
 
 const api = {
   signUp,
   signIn,
-  getData,
+  getProducts,
+  getCategories,
+  createProduct,
 };
 
 export default api;

@@ -52,7 +52,7 @@ export default function SignIn(params) {
         data: { token },
       } = await api.signIn(formData);
       signIn(token);
-      navigate("/listar");
+      navigate("/pedido");
     } catch (error) {
       if (error.response) {
         Toast("error", error.response.data);

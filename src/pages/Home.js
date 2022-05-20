@@ -45,7 +45,7 @@ export default function Home(params) {
 
     e.target.classList.add("activeTab");
     setShow(true);
-    navigate("/listar");
+    navigate("/pedido");
 
     e.preventDefault();
   }

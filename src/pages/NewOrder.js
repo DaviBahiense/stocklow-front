@@ -3,7 +3,6 @@ import "../assets/css/home.css";
 import {
   Box,
   Button,
-  Divider,
   TextField,
   Autocomplete,
   Typography,
@@ -60,69 +59,74 @@ const list = [
   { category: "joj" },
 ];
 
-export default function List() {
+export default function NewOrder() {
   const [formData, setFormData] = useState({
     category: "",
     product: "",
+    quantity: "",
     unity: "",
   });
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [section, setSection] = useState([{ category: "" }]);
   const [newInput, setNewInput] = useState([{ input: "" }]);
 
-  useEffect(() => {
-    setSection(list);
-  }, []);
-
   function handleSubmit() {}
+  let listar = {};
 
-  function handleAutoInput(name, value) {
-    setFormData({ ...formData, [name]: value });
+  function handleAutoInput(name, value, listCategory) {
+    setFormData([
+      ...formData,
+      { product: value, category: listCategory, unity: 1 },
+    ]);
   }
 
-  function handleAddInput(params) {
+  function addInput() {
     setNewInput([...newInput, { input: "" }]);
   }
 
   return (
     <div class="content">
       <Form onSubmit={handleSubmit}>
-        <Box sx={styles.boxCategory}>
-          <Typography sx={styles.typo}>Verduras</Typography>
-          <Button
-            variant="contained"
-            sx={styles.button}
-            endIcon={<AddIcon />}
-            onClick={handleAddInput}
-          />
-        </Box>
-        {newInput.map((e, index) => (
-          <Box key={index} sx={styles.boxInput}>
-            <Autocomplete
-              className="product"
-              sx={styles.input}
-              autoComplete={true}
-              options={list.map((e) => e.category)}
-              isOptionEqualToValue={(option, value) => option === value}
-              renderInput={(e) => (
-                <TextField {...e} label="Produto" size="medium" />
-              )}
-              onInputChange={(e, value) => handleAutoInput("product", value)}
-            />
-            <Autocomplete
-              className="untiy"
-              sx={(styles.input, { width: "80px" })}
-              autoComplete={true}
-              options={list.map((e) => e.category)}
-              isOptionEqualToValue={(option, value) => option === value}
-              renderInput={(e) => (
-                <TextField {...e} label="unid" size="medium" />
-              )}
-              onInputChange={(e, value) => handleAutoInput("untiy", value)}
-            />
-          </Box>
+        {list.map((listCategory, index) => (
+          <>
+            <Box sx={styles.boxCategory} key={index}>
+              <Typography sx={styles.typo}>{listCategory.category}</Typography>
+              <Button
+                variant="contained"
+                sx={styles.button}
+                endIcon={<AddIcon />}
+                onClick={addInput}
+              />
+            </Box>
+            {newInput.map((e, index) => (
+              <Box key={index} sx={styles.boxInput}>
+                <Autocomplete
+                  className="product"
+                  sx={styles.input}
+                  autoComplete={true}
+                  options={list.map((e) => e.category)}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  renderInput={(e) => (
+                    <TextField {...e} label="Produto" size="medium" />
+                  )}
+                  onInputChange={(e, value) =>
+                    handleAutoInput("product", value, listCategory.category)
+                  }
+                />
+                <Autocomplete
+                  className="untiy"
+                  sx={(styles.input, { width: "80px" })}
+                  autoComplete={true}
+                  options={list.map((e) => e.category)}
+                  renderInput={(e) => (
+                    <TextField {...e} label="unid" size="medium" />
+                  )}
+                  onInputChange={(e, value) => handleAutoInput("untiy", value)}
+                />
+              </Box>
+            ))}
+          </>
         ))}
 
         <Box sx={styles.actionsContainer}>
@@ -131,7 +135,7 @@ export default function List() {
             type="submit"
             sx={{ width: "697px", height: "46px", backgroundColor: "#a6a0ce" }}
             endIcon={<SendIcon />}
-            onClick={() => navigate("/listar")}
+            onClick={() => navigate("/pedido")}
           >
             {loading ? "Carregando" : "Enviar"}
           </Button>
