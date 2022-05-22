@@ -92,7 +92,7 @@ ul.tabs li a.activeTab {
 }
 .content {
   width: 800px;
-  height: 50vmax;
+  height: min(50vmax, auto);
   margin: 0 auto;
   padding-top: 15px;
   background: #fff4dc;
@@ -109,6 +109,7 @@ ul.tabs li a.activeTab {
   border-right: 2px solid #72655F;
   border-left: 2px solid #72655F;
   border-top: 2px solid #72655F;
+  padding-bottom: 20px;
   
 }
 

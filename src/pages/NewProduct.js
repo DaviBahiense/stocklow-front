@@ -86,7 +86,7 @@ export default function List() {
   }
 
   return (
-    <div class="content">
+    <div className="content">
       <Typography sx={styles.typo}>Inserir novo produto</Typography>
       <Form onSubmit={handleSubmit}>
         <Box sx={styles.container}>

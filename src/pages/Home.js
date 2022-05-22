@@ -64,13 +64,13 @@ export default function Home(params) {
   }
 
   return (
-    <div class="wrapper">
-      <ul class="tabs group">
+    <div className="wrapper">
+      <ul className="tabs group">
         <li onClick={firstTab}>
-          <a class="tabOne switch activeTab">Criar Pedido</a>
+          <a className="tabOne switch activeTab">Criar Pedido</a>
         </li>
         <li onClick={secondTab}>
-          <a class="tabTwo switch">Adicionar Produto</a>
+          <a className="tabTwo switch">Adicionar Produto</a>
         </li>
       </ul>
       <Outlet />
